@@ -14,7 +14,7 @@ export const addFeedItems = async (
   const databaseId = process.env.NOTION_READER_DATABASE_ID || ''
 
   newFeedItems.forEach(async (item) => {
-    const { title, link, enclosure, pubDate } = item
+    const { title, link, enclosure, pubDate, impact } = item
     const domain = link?.match(/^https?:\/{2,}(.*?)(?:\/|\?|#|$)/)
 
     const properties: TODO = {
@@ -43,6 +43,12 @@ export const addFeedItems = async (
             },
           },
         ],
+      },
+      Impact: {
+        select: {
+          // これでInpactの項目ができ、ドメイン名が入るかテスト
+          name: domain ? domain[1] : null,
+        },
       },
     }
 
